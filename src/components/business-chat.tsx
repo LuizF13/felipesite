@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AppIcon } from "@/components/app-icon";
+import { BrandLogo } from "@/components/brand-logo";
 import { postJson } from "@/lib/xhr-client";
 import { siteConfig } from "@/lib/config";
 
@@ -123,7 +124,7 @@ export function BusinessChat() {
         <section className="chat-window" aria-label="Assistente Hope Business">
           <header className="chat-header">
             <div className="chat-avatar">
-              <span>H</span>
+              <BrandLogo compact />
               <i />
             </div>
             <div>
