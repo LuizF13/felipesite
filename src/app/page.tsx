@@ -26,7 +26,7 @@ export default async function HomePage() {
               <span>Santa Catarina</span>
             </div>
 
-            <p className="eyebrow">Consultoria imobiliária · Brasil ↔ Europa</p>
+            <p className="eyebrow">Consultoria imobiliária · Brasil ↔ Mundo</p>
 
             <h1>
               Seu próximo imóvel no Brasil,
@@ -35,7 +35,7 @@ export default async function HomePage() {
 
             <p className="hero-copy">
               Curadoria de oportunidades, leitura de mercado e acompanhamento
-              local para brasileiros que vivem na Europa e querem investir com
+              local para brasileiros que vivem fora do país e querem investir com
               mais informação no litoral catarinense.
             </p>
 
@@ -58,7 +58,7 @@ export default async function HomePage() {
                 <span>Imóveis selecionados por perfil e objetivo.</span>
               </div>
               <div>
-                <strong>Brasil ↔ Europa</strong>
+                <strong>Brasil ↔ Mundo</strong>
                 <span>Processo pensado para quem está à distância.</span>
               </div>
             </div>
