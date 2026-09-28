@@ -1,19 +1,13 @@
 import {
-  createProperty,
   deleteProperty,
   deletePropertyImage,
   setCoverImage,
-  updateProperty,
 } from "@/app/admin/actions";
 import { AiPropertyAssistant } from "@/components/admin/ai-property-assistant";
 import { formatPrice, statusLabel } from "@/lib/format";
 import type { Property } from "@/lib/types";
 
 export function PropertyForm({ property }: { property?: Property | null }) {
-  const action = property
-    ? updateProperty.bind(null, property.id)
-    : createProperty;
-
   const images = property?.property_images
     ? [...property.property_images].sort(
         (a, b) => (a.position || 0) - (b.position || 0)
@@ -22,7 +16,15 @@ export function PropertyForm({ property }: { property?: Property | null }) {
 
   return (
     <div className="admin-editor">
-      <form action={action} className="admin-form">
+      <form
+        action="/api/admin/properties/save"
+        method="post"
+        encType="multipart/form-data"
+        className="admin-form"
+      >
+        {property ? (
+          <input type="hidden" name="property_id" value={property.id} />
+        ) : null}
         <div className="admin-form-main">
           <AiPropertyAssistant />
 
