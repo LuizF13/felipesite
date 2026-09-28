@@ -25,12 +25,12 @@ export const demoProperties: Property[] = [
     description:
       "Empreendimento demonstrativo de alto padrão em Itapema. Os dados desta unidade são apenas para visualizar o funcionamento do catálogo antes da conexão com o banco real.",
     cover_image_url:
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=85",
+      "/images/property-placeholder.svg",
     amenities: ["Piscina", "Academia", "Rooftop", "Salão de festas"],
     property_images: [
-      { url: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=85", position: 0 },
-      { url: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1200&q=85", position: 1 },
-      { url: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1200&q=85", position: 2 }
+      { url: "/images/property-placeholder.svg", position: 0 },
+      { url: "/images/property-placeholder.svg", position: 1 },
+      { url: "/images/property-placeholder.svg", position: 2 }
     ]
   },
   {
@@ -57,11 +57,11 @@ export const demoProperties: Property[] = [
     description:
       "Projeto demonstrativo em Porto Belo, usado para validar o design e os fluxos do catálogo.",
     cover_image_url:
-      "https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1600&q=85",
+      "/images/property-placeholder.svg",
     amenities: ["Piscina", "Vista para o mar", "Espaço gourmet"],
     property_images: [
-      { url: "https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1600&q=85", position: 0 },
-      { url: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=85", position: 1 }
+      { url: "/images/property-placeholder.svg", position: 0 },
+      { url: "/images/property-placeholder.svg", position: 1 }
     ]
   },
   {
@@ -87,10 +87,10 @@ export const demoProperties: Property[] = [
     delivery_label: "Pronto",
     description: "Cobertura demonstrativa de alto padrão para apresentação do status reservado.",
     cover_image_url:
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=85",
+      "/images/property-placeholder.svg",
     amenities: ["Vista para o mar", "Piscina", "Mobiliado"],
     property_images: [
-      { url: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=85", position: 0 }
+      { url: "/images/property-placeholder.svg", position: 0 }
     ]
   },
   {
@@ -117,10 +117,10 @@ export const demoProperties: Property[] = [
     description:
       "Imóvel demonstrativo já comercializado. No site real, imóveis vendidos podem permanecer públicos como histórico e prova de atuação.",
     cover_image_url:
-      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=1600&q=85",
+      "/images/property-placeholder.svg",
     amenities: ["Área de lazer", "Academia"],
     property_images: [
-      { url: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=1600&q=85", position: 0 }
+      { url: "/images/property-placeholder.svg", position: 0 }
     ]
   }
 ];
