@@ -11,8 +11,18 @@ const responseSchema = {
     reply: { type: "string" },
     escalate: { type: "boolean" },
     handoff_reason: { type: "string" },
+    contact_intent: { type: "boolean" },
+    related_property_slug: { type: "string" },
+    related_property_name: { type: "string" },
   },
-  required: ["reply", "escalate", "handoff_reason"],
+  required: [
+    "reply",
+    "escalate",
+    "handoff_reason",
+    "contact_intent",
+    "related_property_slug",
+    "related_property_name",
+  ],
 };
 
 type Message = {
@@ -54,6 +64,10 @@ ESCOPO OBRIGATÓRIO:
 - Imóvel com status sold/vendido não deve ser tratado como disponível.
 - Se o cliente perguntar algo da empresa que não esteja no contexto, que dependa de negociação humana, documentação específica, condição comercial atual, disponibilidade não listada, financiamento, proposta ou informação que você não consiga confirmar, defina escalate=true.
 - Quando escalate=true, responda brevemente dizendo que a equipe humana consegue continuar pelo WhatsApp.
+- Se o cliente demonstrar intenção de contato, pedir atendimento, proposta, visita, disponibilidade, negociação ou disser que gostou de um imóvel e quer falar com alguém, defina contact_intent=true.
+- Quando houver um imóvel claramente relacionado, preencha related_property_slug e related_property_name com os dados EXATOS do inventário. Caso contrário, use string vazia.
+- Sempre que citar uma página de imóvel, escreva um link Markdown clicável no formato [Nome do imóvel](/imoveis/slug). Não escreva somente o caminho solto.
+- Se indicar WhatsApp ou contato humano, diga que o botão de contato estará disponível no chat.
 - Para perguntas claramente fora do assunto da empresa, responda educadamente que você atende somente assuntos da Hope Business. Nesse caso, escalate=false.
 - Seja cordial, breve, profissional e em português do Brasil.
 - Nunca prometa retorno financeiro ou valorização.
@@ -93,6 +107,9 @@ Responda agora à última mensagem do cliente.
       handoff_reason:
         error instanceof Error ? error.message : "Falha no atendimento automático.",
       original_message: lastUserMessage,
+      contact_intent: true,
+      related_property_slug: "",
+      related_property_name: "",
     });
   }
 }
