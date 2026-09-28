@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { siteConfig } from "@/lib/config";
+import { BrandLogo } from "@/components/brand-logo";
 
 export function SiteHeader({ solid = false }: { solid?: boolean }) {
   return (
     <header className={solid ? "site-header site-header-solid" : "site-header"}>
       <div className="container nav">
-        <Link href="/" className="brand">
-          {siteConfig.companyName}
+        <Link href="/" className="brand" aria-label="Hope Business - início">
+          <BrandLogo />
         </Link>
 
         <nav className="nav-links" aria-label="Navegação principal">
