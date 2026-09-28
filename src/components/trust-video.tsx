@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { AppIcon } from "@/components/app-icon";
 
 type WebkitVideo = HTMLVideoElement & {
   webkitEnterFullscreen?: () => void;
@@ -106,7 +107,7 @@ export function TrustVideo() {
           onClick={togglePlayback}
           aria-label={playing ? "Pausar vídeo" : "Reproduzir vídeo"}
         >
-          {playing ? "❚❚" : "▶"}
+          <AppIcon name={playing ? "pause" : "play"} size={17} />
           <span>{playing ? "Pausar" : "Reproduzir"}</span>
         </button>
 
@@ -116,7 +117,7 @@ export function TrustVideo() {
           onClick={toggleSound}
           aria-label={muted ? "Ativar som" : "Desativar som"}
         >
-          {muted ? "🔇" : "🔊"}
+          <AppIcon name={muted ? "mute" : "volume"} size={17} />
           <span>{muted ? "Ativar som" : "Som ligado"}</span>
         </button>
 
@@ -126,7 +127,7 @@ export function TrustVideo() {
           onClick={enterFullscreen}
           aria-label="Abrir vídeo em tela cheia"
         >
-          ⛶
+          <AppIcon name="fullscreen" size={17} />
           <span>Tela cheia</span>
         </button>
       </div>
