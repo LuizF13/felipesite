@@ -60,33 +60,60 @@ export default async function PropertyPage({ params }: { params: Params }) {
                 <h1 className="section-title">{property.name}</h1>
               </div>
 
-              <div className="detail-title-price">
-                <span className={`status-badge static status-${property.status}`}>
-                  {statusLabel(property.status)}
-                </span>
-                <small>{property.status === "sold" ? "Status" : "Valor"}</small>
-                <strong>
+              <span className={`status-badge static status-${property.status}`}>
+                {statusLabel(property.status)}
+              </span>
+            </div>
+
+            <div className="property-showcase-grid">
+              <div className="gallery">
+                {(images.length ? images : [
+                  "/images/property-placeholder.svg",
+                ])
+                  .slice(0, 3)
+                  .map((image, index) => (
+                    <img src={image} alt={`${property.name} - imagem ${index + 1}`} key={image} />
+                  ))}
+              </div>
+
+              <aside className="detail-aside detail-contact-card detail-contact-card-showcase">
+                <p className="eyebrow dark">
+                  {property.status === "sold" ? "Imóvel comercializado" : "Fale sobre este imóvel"}
+                </p>
+
+                <div className="detail-price">
                   {property.status === "sold"
                     ? "Vendido"
                     : formatPrice(property.price_cents, property.price_on_request)}
-                </strong>
-              </div>
-            </div>
+                </div>
 
-            <div className="gallery">
-              {(images.length ? images : [
-                "/images/property-placeholder.svg",
-              ])
-                .slice(0, 3)
-                .map((image, index) => (
-                  <img src={image} alt={`${property.name} - imagem ${index + 1}`} key={image} />
-                ))}
+                <div className="detail-quick-specs">
+                  <span><strong>{property.suites}</strong> suítes</span>
+                  <span>
+                    <strong>{property.private_area || "—"}</strong>{" "}
+                    {property.private_area ? "m²" : "área"}
+                  </span>
+                  <span><strong>{property.garages}</strong> vagas</span>
+                </div>
+
+                <p>
+                  {property.status === "sold"
+                    ? "Este imóvel já foi comercializado. Envie seus dados para receber opções semelhantes."
+                    : "Envie seus dados. O interesse fica registrado e o WhatsApp abre com uma mensagem pronta para a equipe."}
+                </p>
+
+                <LeadForm
+                  propertyId={property.id}
+                  propertyName={property.name}
+                  compact
+                />
+              </aside>
             </div>
           </div>
         </section>
 
         <section className="detail-section">
-          <div className="container detail-grid">
+          <div className="container detail-content">
             <div>
               <h2 className="content-title">Sobre o empreendimento</h2>
               <p className="lead">
@@ -116,32 +143,6 @@ export default async function PropertyPage({ params }: { params: Params }) {
                 </>
               ) : null}
             </div>
-
-            <aside className="detail-aside detail-contact-card">
-              <p className="eyebrow dark">
-                {property.status === "sold" ? "Imóvel comercializado" : "Fale sobre este imóvel"}
-              </p>
-
-              <div className="detail-price">
-                {property.status === "sold"
-                  ? "Vendido"
-                  : formatPrice(property.price_cents, property.price_on_request)}
-              </div>
-
-              <div className="detail-quick-specs">
-                <span>{property.suites} suítes</span>
-                <span>{property.private_area ? `${property.private_area} m²` : "Área sob consulta"}</span>
-                <span>{property.garages} vagas</span>
-              </div>
-
-              <p>
-                {property.status === "sold"
-                  ? "Este imóvel já foi comercializado. Envie seus dados para receber opções semelhantes."
-                  : "Envie seus dados. O interesse fica registrado e o WhatsApp abre com uma mensagem pronta para a equipe."}
-              </p>
-
-              <LeadForm propertyId={property.id} propertyName={property.name} compact />
-            </aside>
           </div>
         </section>
       </main>
