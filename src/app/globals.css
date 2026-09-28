@@ -3015,3 +3015,138 @@ textarea:focus {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+
+/* Logo visibility hardening */
+.brand-logo {
+  position: relative;
+  overflow: hidden;
+}
+
+.brand-logo img {
+  opacity: 0;
+  transition: opacity 140ms ease;
+}
+
+.brand-logo img.is-loaded {
+  opacity: 1;
+}
+
+.brand-logo-fallback {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  color: currentColor;
+  white-space: nowrap;
+}
+
+.brand-logo-fallback b {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.05rem;
+  letter-spacing: .04em;
+}
+
+.brand-logo-fallback small {
+  font-size: .48rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+
+.site-header:not(.site-header-solid) .brand-logo,
+.footer-brand-column .brand-logo,
+.admin-brand .brand-logo,
+.chat-avatar .brand-logo {
+  padding: 5px 8px;
+  border-radius: 9px;
+  background: rgba(247, 243, 235, .96);
+  color: #10231f;
+}
+
+.site-header:not(.site-header-solid) .brand-logo {
+  min-width: 118px;
+}
+
+.chat-avatar {
+  width: 92px;
+  height: 42px;
+  border-radius: 11px;
+  background: transparent;
+  border: 0;
+}
+
+.chat-avatar .brand-logo {
+  width: 88px;
+  height: 38px;
+  justify-content: center;
+}
+
+.chat-avatar .brand-logo img {
+  width: 100%;
+  max-width: 80px;
+  height: 28px;
+}
+
+.chat-avatar .brand-logo-fallback b {
+  font-size: .84rem;
+}
+
+.chat-avatar .brand-logo-fallback small {
+  font-size: .38rem;
+}
+
+.chat-avatar i {
+  right: -1px;
+  bottom: 1px;
+}
+
+/* Consultative chat handoff */
+.chat-contact-choice {
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+  border: 1px solid #d8e4dd;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #f6faf7, #eef6f1);
+}
+
+.chat-contact-choice > strong {
+  font-size: .8rem;
+}
+
+.chat-contact-choice > p {
+  margin: 0;
+  color: #66736d;
+  font-size: .69rem;
+  line-height: 1.5;
+}
+
+.chat-contact-choice > div {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 7px;
+  margin-top: 3px;
+}
+
+.chat-contact-choice .button {
+  min-height: 40px;
+  padding: 9px 12px;
+  font-size: .72rem;
+}
+
+.chat-contact-choice .button-outline {
+  background: white;
+}
+
+@media (max-width: 640px) {
+  .chat-avatar {
+    width: 76px;
+  }
+
+  .chat-avatar .brand-logo {
+    width: 74px;
+  }
+
+  .chat-avatar .brand-logo img {
+    max-width: 68px;
+  }
+}
