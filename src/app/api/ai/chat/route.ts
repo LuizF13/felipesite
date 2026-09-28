@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { buildBusinessContext } from "@/lib/business-context";
-import { getGeminiClient, geminiModel } from "@/lib/gemini";
+import { generateContentWithFallback } from "@/lib/gemini";
 import { getPublishedProperties } from "@/lib/properties";
 
 export const runtime = "nodejs";
@@ -68,9 +68,7 @@ ${history}
 Responda agora à última mensagem do cliente.
 `;
 
-    const ai = getGeminiClient();
-    const response = await ai.models.generateContent({
-      model: geminiModel,
+    const response = await generateContentWithFallback({
       contents: prompt,
       config: {
         responseMimeType: "application/json",
