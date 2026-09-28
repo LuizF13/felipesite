@@ -5,6 +5,17 @@ import type { Lead, Property } from "@/lib/types";
 
 const publicStatuses = ["available", "reserved", "sold"];
 
+function isMissingSchemaError(error: { code?: string; message?: string } | null) {
+  if (!error) return false;
+
+  return (
+    error.code === "PGRST205" ||
+    error.code === "42P01" ||
+    error.message?.includes("Could not find the table") === true ||
+    error.message?.toLowerCase().includes("schema cache") === true
+  );
+}
+
 export async function getPublishedProperties(): Promise<Property[]> {
   if (!isSupabaseConfigured) return demoProperties;
 
@@ -18,6 +29,13 @@ export async function getPublishedProperties(): Promise<Property[]> {
     .order("created_at", { ascending: false });
 
   if (error) {
+    if (isMissingSchemaError(error)) {
+      console.warn(
+        "Supabase schema not installed yet; using demo properties. Run the migration in supabase/migrations."
+      );
+      return demoProperties;
+    }
+
     console.error("properties:", error.message);
     return [];
   }
@@ -45,6 +63,13 @@ export async function getPropertyBySlug(slug: string): Promise<Property | null> 
     .maybeSingle();
 
   if (error) {
+    if (isMissingSchemaError(error)) {
+      console.warn(
+        "Supabase schema not installed yet; using demo property details."
+      );
+      return demoProperties.find((item) => item.slug === slug) || null;
+    }
+
     console.error("property:", error.message);
     return null;
   }
@@ -61,7 +86,17 @@ export async function getAllPropertiesAdmin(): Promise<Property[]> {
     .select("*, property_images(*)")
     .order("created_at", { ascending: false });
 
-  if (error) throw new Error(error.message);
+  if (error) {
+    if (isMissingSchemaError(error)) {
+      console.warn(
+        "Supabase schema not installed yet; showing demo properties in admin."
+      );
+      return demoProperties;
+    }
+
+    throw new Error(error.message);
+  }
+
   return (data || []) as Property[];
 }
 
@@ -77,7 +112,17 @@ export async function getPropertyAdmin(id: string): Promise<Property | null> {
     .eq("id", id)
     .maybeSingle();
 
-  if (error) throw new Error(error.message);
+  if (error) {
+    if (isMissingSchemaError(error)) {
+      console.warn(
+        "Supabase schema not installed yet; showing demo property in admin."
+      );
+      return demoProperties.find((item) => item.id === id) || null;
+    }
+
+    throw new Error(error.message);
+  }
+
   return data as Property | null;
 }
 
@@ -90,6 +135,14 @@ export async function getLeadsAdmin(): Promise<Lead[]> {
     .select("*")
     .order("created_at", { ascending: false });
 
-  if (error) throw new Error(error.message);
+  if (error) {
+    if (isMissingSchemaError(error)) {
+      console.warn("Supabase schema not installed yet; no leads available.");
+      return [];
+    }
+
+    throw new Error(error.message);
+  }
+
   return (data || []) as Lead[];
 }
