@@ -15,14 +15,26 @@ export async function POST(request: Request) {
       propertyName?: string;
       transcript?: string;
       lastMessage?: string;
+      country?: string;
+      budgetRange?: string;
+      goal?: string;
+      regionInterest?: string;
+      timeline?: string;
+      language?: "pt" | "en";
     };
 
     const name = String(body.name || "").trim();
     const whatsapp = String(body.whatsapp || "").trim();
+    const language = body.language === "en" ? "en" : "pt";
 
     if (!name || !whatsapp) {
       return NextResponse.json(
-        { error: "Informe seu nome e WhatsApp para continuar." },
+        {
+          error:
+            language === "en"
+              ? "Enter your name and WhatsApp number."
+              : "Informe seu nome e WhatsApp para continuar.",
+        },
         { status: 400 }
       );
     }
@@ -37,40 +49,66 @@ export async function POST(request: Request) {
       propertyName = property?.name || propertyName;
     }
 
-    const context = [
+    const contextLines = [
       "Origem: Assistente virtual Hope Business",
+      body.country ? `País: ${body.country}` : "",
+      body.budgetRange ? `Faixa de investimento: ${body.budgetRange}` : "",
+      body.goal ? `Objetivo: ${body.goal}` : "",
+      body.regionInterest ? `Região de interesse: ${body.regionInterest}` : "",
+      body.timeline ? `Prazo/momento: ${body.timeline}` : "",
       propertyName ? `Imóvel de interesse: ${propertyName}` : "",
       body.lastMessage ? `Última solicitação: ${body.lastMessage}` : "",
       body.transcript ? `Conversa:\n${body.transcript}` : "",
-    ]
-      .filter(Boolean)
-      .join("\n\n");
+    ].filter(Boolean);
 
     if (isSupabaseConfigured) {
       const supabase = await createClient();
+
       const { error } = await supabase.from("leads").insert({
         property_id: propertyId,
         name,
         whatsapp,
         email: String(body.email || "").trim() || null,
-        country: null,
-        budget_range: null,
-        goal: propertyName ? `Interesse em ${propertyName}` : "Contato via chatbot",
-        message: context,
+        country: String(body.country || "").trim() || null,
+        budget_range: String(body.budgetRange || "").trim() || null,
+        goal:
+          String(body.goal || "").trim() ||
+          (propertyName ? `Interesse em ${propertyName}` : "Contato via chatbot"),
+        message: contextLines.join("\n\n"),
         status: "new",
       });
 
       if (error) throw new Error(error.message);
     }
 
-    const readyMessage = [
-      "Olá! Vim pelo site da Hope Business e gostaria de continuar o atendimento.",
-      `Nome: ${name}`,
-      propertyName ? `Imóvel: ${propertyName}` : "",
-      body.lastMessage ? `Assunto: ${body.lastMessage}` : "",
-    ]
-      .filter(Boolean)
-      .join("\n");
+    const readyMessage =
+      language === "en"
+        ? [
+            "Hello! I came from the Hope Business website and would like to continue with the team.",
+            `Name: ${name}`,
+            body.country ? `Country: ${body.country}` : "",
+            body.budgetRange ? `Budget range: ${body.budgetRange}` : "",
+            body.goal ? `Goal: ${body.goal}` : "",
+            body.regionInterest ? `Preferred area: ${body.regionInterest}` : "",
+            body.timeline ? `Timeline: ${body.timeline}` : "",
+            propertyName ? `Property: ${propertyName}` : "",
+            body.lastMessage ? `Latest question: ${body.lastMessage}` : "",
+          ]
+            .filter(Boolean)
+            .join("\n")
+        : [
+            "Olá! Vim pelo site da Hope Business e gostaria de continuar o atendimento com a equipe.",
+            `Nome: ${name}`,
+            body.country ? `País: ${body.country}` : "",
+            body.budgetRange ? `Faixa de investimento: ${body.budgetRange}` : "",
+            body.goal ? `Objetivo: ${body.goal}` : "",
+            body.regionInterest ? `Região de interesse: ${body.regionInterest}` : "",
+            body.timeline ? `Prazo/momento: ${body.timeline}` : "",
+            propertyName ? `Imóvel: ${propertyName}` : "",
+            body.lastMessage ? `Última dúvida: ${body.lastMessage}` : "",
+          ]
+            .filter(Boolean)
+            .join("\n");
 
     return NextResponse.json({
       saved: isSupabaseConfigured,
@@ -79,6 +117,7 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("Chat lead:", error);
+
     return NextResponse.json(
       {
         error:
