@@ -19,6 +19,7 @@ export function BrandLogo({
           "/hop.png",
           "/images/Hop.png",
           "/images/hop.png",
+          "/Hop.svg",
         ])
       ),
     []
