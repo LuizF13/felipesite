@@ -3,6 +3,7 @@ import { LeadForm } from "@/components/lead-form";
 import { PropertyCard } from "@/components/property-card";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { TrustVideo } from "@/components/trust-video";
 import { getFeaturedProperties } from "@/lib/properties";
 
 export default async function HomePage() {
@@ -13,51 +14,155 @@ export default async function HomePage() {
       <SiteHeader />
 
       <main>
-        <section className="hero">
-          <video className="hero-video" autoPlay muted loop playsInline>
-            <source src="/videos/hero.mp4" type="video/mp4" />
-          </video>
+        <section className="hero realty-hero">
           <div className="hero-overlay" />
 
           <div className="container hero-content">
-            <p className="eyebrow">Brasil de perto · mesmo estando na Europa</p>
-            <h1>Seu patrimônio pode atravessar o Atlântico.</h1>
+            <div className="hero-kicker">
+              <span>Itapema</span>
+              <i />
+              <span>Porto Belo</span>
+              <i />
+              <span>Santa Catarina</span>
+            </div>
+
+            <p className="eyebrow">Consultoria imobiliária · Brasil ↔ Europa</p>
+
+            <h1>
+              Seu próximo imóvel no Brasil,
+              <em> visto de perto.</em>
+            </h1>
+
             <p className="hero-copy">
-              Informação local, oportunidades selecionadas e acompanhamento para
-              brasileiros que vivem na Europa e estão considerando investir em
-              imóveis no Brasil.
+              Curadoria de oportunidades, leitura de mercado e acompanhamento
+              local para brasileiros que vivem na Europa e querem investir com
+              mais informação no litoral catarinense.
             </p>
 
             <div className="hero-actions">
               <Link href="/imoveis" className="button button-light">
-                Conhecer oportunidades →
+                Ver imóveis disponíveis →
               </Link>
-              <Link href="/#contato" className="button button-ghost">
-                Falar com a equipe
+              <Link href="/#video-apresentacao" className="button button-ghost">
+                Conhecer nossa forma de trabalhar
               </Link>
+            </div>
+
+            <div className="hero-trust-strip">
+              <div>
+                <strong>Atendimento local</strong>
+                <span>Equipe acompanhando a região no Brasil.</span>
+              </div>
+              <div>
+                <strong>Curadoria</strong>
+                <span>Imóveis selecionados por perfil e objetivo.</span>
+              </div>
+              <div>
+                <strong>Brasil ↔ Europa</strong>
+                <span>Processo pensado para quem está à distância.</span>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="section">
-          <div className="container split">
-            <div>
-              <p className="eyebrow dark">01 · Começa pelas perguntas certas</p>
+        <section className="section trust-section" id="video-apresentacao">
+          <div className="container trust-layout">
+            <div className="trust-copy">
+              <p className="eyebrow dark">Uma conversa antes do imóvel</p>
               <h2 className="section-title">
-                Investir à distância não precisa ser investir no escuro.
+                Conheça quem está do outro lado da sua decisão.
               </h2>
               <p className="lead">
-                Antes de escolher um apartamento, é preciso entender região,
-                objetivo, risco, empresa responsável e o momento daquele mercado.
+                Investir à distância exige confiança. Por isso, antes de mostrar
+                plantas e valores, queremos que você conheça a visão da equipe,
+                entenda como analisamos as oportunidades e saiba quem estará aqui
+                no Brasil acompanhando o processo com você.
+              </p>
+
+              <div className="trust-points">
+                <div>
+                  <strong>Presença local</strong>
+                  <span>Conhecimento da região, obras e incorporadoras.</span>
+                </div>
+                <div>
+                  <strong>Atendimento pessoal</strong>
+                  <span>Contato direto com uma equipe real, sem catálogo automático.</span>
+                </div>
+                <div>
+                  <strong>Decisão informada</strong>
+                  <span>Dados, contexto e transparência antes da negociação.</span>
+                </div>
+              </div>
+            </div>
+
+            <TrustVideo />
+          </div>
+        </section>
+
+        <section className="section properties-section home-properties">
+          <div className="container">
+            <div className="section-heading">
+              <div>
+                <p className="eyebrow dark">Imóveis em destaque</p>
+                <h2 className="section-title">Oportunidades selecionadas.</h2>
+                <p className="lead">
+                  Uma vitrine enxuta, com empreendimentos que a equipe escolheu
+                  destacar. O catálogo completo fica em uma área própria.
+                </p>
+              </div>
+
+              <Link href="/imoveis" className="button button-dark">
+                Explorar todos os imóveis →
+              </Link>
+            </div>
+
+            {featured.length ? (
+              <div className="property-grid">
+                {featured.map((property) => (
+                  <PropertyCard property={property} key={property.id} />
+                ))}
+              </div>
+            ) : (
+              <div className="empty-state">
+                Os imóveis em destaque aparecerão aqui assim que forem publicados
+                no painel administrativo.
+              </div>
+            )}
+          </div>
+        </section>
+
+        <section className="section advisory-section">
+          <div className="container split">
+            <div>
+              <p className="eyebrow dark">Antes da escolha</p>
+              <h2 className="section-title">
+                A compra começa pelas perguntas certas.
+              </h2>
+              <p className="lead">
+                Um imóvel pode ser bonito e ainda assim não fazer sentido para o
+                seu objetivo. A análise precisa considerar região, produto,
+                incorporadora, condição e horizonte.
               </p>
             </div>
 
             <div className="question-list">
               {[
-                ["Onde investir?", "Entender quais regiões apresentam fundamentos compatíveis com o seu objetivo."],
-                ["Que imóvel escolher?", "Patrimônio, renda, valorização e uso futuro pedem análises diferentes."],
-                ["Em quem confiar?", "Incorporadora, documentação, histórico e produto também fazem parte da decisão."],
-                ["Como acompanhar de longe?", "Uma equipe local pode visitar, comparar e acompanhar o mercado por você."],
+                [
+                  "Onde investir?",
+                  "Entender quais regiões apresentam fundamentos compatíveis com o seu objetivo.",
+                ],
+                [
+                  "Que imóvel escolher?",
+                  "Patrimônio, renda, valorização e uso futuro pedem análises diferentes.",
+                ],
+                [
+                  "Em quem confiar?",
+                  "Incorporadora, documentação, histórico e produto também fazem parte da decisão.",
+                ],
+                [
+                  "Como acompanhar de longe?",
+                  "Uma equipe local pode visitar, comparar e acompanhar o mercado por você.",
+                ],
               ].map(([title, text], index) => (
                 <article className="question-row" key={title}>
                   <span>0{index + 1}</span>
@@ -74,16 +179,16 @@ export default async function HomePage() {
         <section className="section bridge">
           <div className="container split">
             <div>
-              <p className="eyebrow">02 · Europa ↔ Brasil</p>
+              <p className="eyebrow">Brasil ↔ Europa</p>
               <h2 className="section-title light">
-                Você está na Europa.
+                Você continua sua vida aí.
                 <br />
-                Nós estamos aqui.
+                Nós acompanhamos daqui.
               </h2>
               <p className="lead light-muted">
-                Nosso trabalho é transformar distância em informação: entender
-                o seu perfil, acompanhar o mercado local e apresentar
-                possibilidades que mereçam ser analisadas.
+                Nossa função é encurtar a distância: entender o seu perfil,
+                acompanhar o mercado local e organizar as informações que você
+                precisa para avaliar cada oportunidade.
               </p>
               <Link href="/#contato" className="button button-light">
                 Conversar com a equipe →
@@ -109,32 +214,51 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <section className="section" id="regiao">
+        <section className="section region-section" id="regiao">
           <div className="container">
             <div className="section-heading">
               <div>
-                <p className="eyebrow dark">03 · A região</p>
+                <p className="eyebrow dark">Onde estamos olhando</p>
                 <h2 className="section-title">Itapema & Porto Belo.</h2>
               </div>
               <p className="lead">
-                O objetivo não é vender apenas a paisagem. É mostrar os
-                fundamentos por trás do desenvolvimento da região e deixar claro
-                o que é dado, o que é contexto e o que ainda precisa ser analisado.
+                Localização continua sendo um dos principais fundamentos do
+                mercado imobiliário. Aqui, a região é apresentada não só pela
+                paisagem, mas por infraestrutura, desenvolvimento e dinâmica
+                urbana.
               </p>
             </div>
 
             <div className="region-video">
-              <video controls playsInline poster="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=85">
+              <video
+                controls
+                playsInline
+                poster="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=85"
+              >
                 <source src="/videos/regiao.mp4" type="video/mp4" />
               </video>
+              <div className="region-video-label">
+                <strong>Veja a região de perto</strong>
+                <span>Imagens locais · litoral de Santa Catarina</span>
+              </div>
             </div>
           </div>
         </section>
 
         <section className="section evidence">
           <div className="container">
-            <p className="eyebrow dark">04 · Dados, não promessa</p>
-            <h2 className="section-title">O mercado precisa ser lido com contexto.</h2>
+            <div className="section-heading evidence-heading">
+              <div>
+                <p className="eyebrow dark">Contexto de mercado</p>
+                <h2 className="section-title">
+                  Informação antes de qualquer promessa.
+                </h2>
+              </div>
+              <p className="lead">
+                Dados ajudam a entender o cenário. Eles não substituem a análise
+                do imóvel e não representam garantia de retorno futuro.
+              </p>
+            </div>
 
             <div className="stats-grid">
               <article className="stat-card">
@@ -153,7 +277,10 @@ export default async function HomePage() {
               <article className="stat-card">
                 <strong>+8,10%</strong>
                 <h3>12 meses</h3>
-                <p>Variação do índice de venda residencial de Itapema até abril de 2026.</p>
+                <p>
+                  Variação do índice de venda residencial de Itapema até abril de
+                  2026.
+                </p>
                 <a
                   href="https://downloads.fipe.org.br/indices/fipezap/fipezap-202604-residencial-venda-publico.pdf"
                   target="_blank"
@@ -191,55 +318,39 @@ export default async function HomePage() {
             </div>
 
             <p className="source-note">
-              Dados públicos ajudam a contextualizar o mercado, mas não garantem
-              valorização ou retorno futuro. Cada imóvel precisa ser analisado
-              individualmente.
+              Cada investimento possui riscos próprios. Informações de mercado
+              servem como contexto e não constituem garantia de valorização,
+              rentabilidade ou retorno.
             </p>
-          </div>
-        </section>
-
-        <section className="section properties-section">
-          <div className="container">
-            <div className="section-heading">
-              <div>
-                <p className="eyebrow dark">05 · Curadoria</p>
-                <h2 className="section-title">Oportunidades selecionadas.</h2>
-                <p className="lead">
-                  O catálogo existe como uma área própria. A home mostra apenas
-                  os imóveis que a equipe decide destacar.
-                </p>
-              </div>
-
-              <Link href="/imoveis" className="button button-dark">
-                Ver todos os imóveis →
-              </Link>
-            </div>
-
-            <div className="property-grid">
-              {featured.map((property) => (
-                <PropertyCard property={property} key={property.id} />
-              ))}
-            </div>
           </div>
         </section>
 
         <section className="section" id="como-funciona">
           <div className="container split process-grid">
             <div>
-              <p className="eyebrow dark">06 · Como funciona</p>
-              <h2 className="section-title">Não começamos pelo catálogo.</h2>
+              <p className="eyebrow dark">Como funciona</p>
+              <h2 className="section-title">Um processo simples e acompanhado.</h2>
               <p className="lead">
-                Começamos entendendo o seu objetivo e só depois cruzamos o seu
-                perfil com as oportunidades do mercado.
+                O catálogo é apenas uma parte. O atendimento começa entendendo
+                você e termina com acompanhamento da negociação.
               </p>
             </div>
 
             <div className="question-list">
               {[
                 ["Conversamos com você", "Entendemos objetivo, momento e horizonte."],
-                ["Analisamos oportunidades", "Comparamos regiões, projetos, incorporadoras e condições."],
-                ["Mostramos cenários", "Organizamos as informações para facilitar a sua avaliação."],
-                ["Acompanhamos o processo", "Existe uma equipe local durante as etapas da negociação."],
+                [
+                  "Analisamos oportunidades",
+                  "Comparamos regiões, projetos, incorporadoras e condições.",
+                ],
+                [
+                  "Mostramos cenários",
+                  "Organizamos as informações para facilitar a sua avaliação.",
+                ],
+                [
+                  "Acompanhamos o processo",
+                  "Existe uma equipe local durante as etapas da negociação.",
+                ],
               ].map(([title, text], index) => (
                 <article className="question-row" key={title}>
                   <span>0{index + 1}</span>
@@ -256,13 +367,13 @@ export default async function HomePage() {
         <section className="section contact-section" id="contato">
           <div className="container contact-grid">
             <div>
-              <p className="eyebrow">07 · Próximo passo</p>
+              <p className="eyebrow">Próximo passo</p>
               <h2 className="section-title light">
-                Se faz sentido para você, comece por uma conversa.
+                Conte o que você procura. Nós começamos pela conversa.
               </h2>
               <p className="lead light-muted">
-                Conte o que procura. A equipe recebe o lead no painel e pode
-                continuar o atendimento pelo canal definido pela imobiliária.
+                Sua solicitação chega ao painel da equipe para que o atendimento
+                continue com contexto desde o primeiro contato.
               </p>
             </div>
 
