@@ -233,7 +233,7 @@ export default async function HomePage() {
               <video
                 controls
                 playsInline
-                poster="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=85"
+                poster="/images/region-placeholder.svg"
               >
                 <source src="/videos/regiao.mp4" type="video/mp4" />
               </video>
