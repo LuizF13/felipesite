@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AppIcon } from "@/components/app-icon";
+import { postJson } from "@/lib/xhr-client";
 import { siteConfig } from "@/lib/config";
 
 type ChatMessage = {
@@ -73,13 +74,9 @@ export function BusinessChat() {
     setHandoff(false);
 
     try {
-      const response = await fetch("/api/ai/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: nextMessages }),
+      const data = await postJson<ChatResponse>("/api/ai/chat", {
+        messages: nextMessages,
       });
-
-      const data = (await response.json()) as ChatResponse;
 
       setMessages((current) => [
         ...current,
