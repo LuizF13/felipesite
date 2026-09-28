@@ -24,6 +24,7 @@ export default async function AdminLeadsPage() {
                 <th>Faixa</th>
                 <th>Objetivo</th>
                 <th>Data</th>
+                <th>Detalhes</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -39,6 +40,12 @@ export default async function AdminLeadsPage() {
                   <td>{lead.budget_range || "—"}</td>
                   <td>{lead.goal || "—"}</td>
                   <td>{new Date(lead.created_at).toLocaleDateString("pt-BR")}</td>
+                  <td>
+                    <details className="lead-detail">
+                      <summary>Ver contexto</summary>
+                      <pre>{lead.message || lead.goal || "Sem observações."}</pre>
+                    </details>
+                  </td>
                   <td>
                     <form action={updateLeadStatus.bind(null, lead.id)}>
                       <select name="status" defaultValue={lead.status}>
