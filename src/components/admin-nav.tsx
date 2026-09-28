@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { logout } from "@/app/login/actions";
 import { AppIcon } from "@/components/app-icon";
+import { BrandLogo } from "@/components/brand-logo";
 import { siteConfig } from "@/lib/config";
 
 export function AdminNav({ demo = false }: { demo?: boolean }) {
@@ -8,7 +9,7 @@ export function AdminNav({ demo = false }: { demo?: boolean }) {
     <aside className="admin-sidebar">
       <div>
         <div className="admin-brand">
-          {siteConfig.companyName}
+          <BrandLogo compact />
           <span>Gestão imobiliária</span>
         </div>
 
