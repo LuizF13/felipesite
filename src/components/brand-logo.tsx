@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { siteConfig } from "@/lib/config";
 
 export function BrandLogo({
@@ -10,18 +10,52 @@ export function BrandLogo({
   compact?: boolean;
   className?: string;
 }) {
-  const [failed, setFailed] = useState(false);
+  const sources = useMemo(
+    () =>
+      Array.from(
+        new Set([
+          siteConfig.logoPath,
+          "/Hop.png",
+          "/hop.png",
+          "/images/Hop.png",
+          "/images/hop.png",
+        ])
+      ),
+    []
+  );
+
+  const [sourceIndex, setSourceIndex] = useState(0);
+  const [loaded, setLoaded] = useState(false);
+  const source = sources[sourceIndex];
+
+  function tryNextSource() {
+    setLoaded(false);
+    setSourceIndex((current) => current + 1);
+  }
+
+  const exhausted = sourceIndex >= sources.length;
 
   return (
-    <span className={`brand-logo ${compact ? "brand-logo-compact" : ""} ${className}`.trim()}>
-      {!failed ? (
+    <span
+      className={`brand-logo ${compact ? "brand-logo-compact" : ""} ${className}`.trim()}
+      aria-label={siteConfig.companyName}
+    >
+      {!exhausted ? (
         <img
-          src={siteConfig.logoPath}
+          src={source}
           alt={siteConfig.companyName}
-          onError={() => setFailed(true)}
+          className={loaded ? "is-loaded" : ""}
+          onLoad={() => setLoaded(true)}
+          onError={tryNextSource}
         />
       ) : null}
-      {failed ? <span>{siteConfig.companyName}</span> : null}
+
+      {(!loaded || exhausted) ? (
+        <span className="brand-logo-fallback" aria-hidden={!exhausted}>
+          <b>HOPE</b>
+          <small>BUSINESS</small>
+        </span>
+      ) : null}
     </span>
   );
 }
