@@ -15,7 +15,11 @@ type IconName =
   | "pause"
   | "volume"
   | "mute"
-  | "fullscreen";
+  | "fullscreen"
+  | "chat"
+  | "send"
+  | "close"
+  | "whatsapp";
 
 export function AppIcon({
   name,
@@ -161,6 +165,41 @@ export function AppIcon({
     return (
       <svg {...common}>
         <path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5" />
+      </svg>
+    );
+  }
+
+  if (name === "chat") {
+    return (
+      <svg {...common}>
+        <path d="M21 15a4 4 0 0 1-4 4H9l-5 3v-5a7 7 0 0 1-2-5V8a5 5 0 0 1 5-5h10a4 4 0 0 1 4 4v8Z" />
+        <path d="M7 9h10M7 13h7" />
+      </svg>
+    );
+  }
+
+  if (name === "send") {
+    return (
+      <svg {...common}>
+        <path d="m22 2-7 20-4-9-9-4 20-7Z" />
+        <path d="M22 2 11 13" />
+      </svg>
+    );
+  }
+
+  if (name === "close") {
+    return (
+      <svg {...common}>
+        <path d="M6 6l12 12M18 6 6 18" />
+      </svg>
+    );
+  }
+
+  if (name === "whatsapp") {
+    return (
+      <svg {...common}>
+        <path d="M20 11.5a8 8 0 0 1-11.8 7L3 20l1.5-5A8 8 0 1 1 20 11.5Z" />
+        <path d="M8.5 8.2c.5 2.7 2.6 4.8 5.3 5.3" />
       </svg>
     );
   }
