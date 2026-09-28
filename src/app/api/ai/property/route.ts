@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getGeminiClient, geminiModel } from "@/lib/gemini";
+import { GeminiTemporarilyUnavailableError, generateContentWithFallback } from "@/lib/gemini";
 
 export const runtime = "nodejs";
 
@@ -110,9 +110,7 @@ Informações fornecidas:
 ${prompt || "Nenhuma descrição textual. Use apenas o que for visualmente observável e, em modo demo, complete com dados plausíveis."}
 `;
 
-    const ai = getGeminiClient();
-    const response = await ai.models.generateContent({
-      model: geminiModel,
+    const response = await generateContentWithFallback({
       contents: [{ text: instructions }, ...imageParts],
       config: {
         responseMimeType: "application/json",
@@ -129,6 +127,17 @@ ${prompt || "Nenhuma descrição textual. Use apenas o que for visualmente obser
     return NextResponse.json(JSON.parse(text));
   } catch (error) {
     console.error("AI property autofill:", error);
+
+    if (error instanceof GeminiTemporarilyUnavailableError) {
+      return NextResponse.json(
+        {
+          error:
+            "O Gemini está temporariamente com alta demanda. Tentamos novamente e usamos modelos alternativos, mas o serviço continuou indisponível. Tente outra vez em alguns instantes.",
+          retryable: true,
+        },
+        { status: 503 }
+      );
+    }
 
     const message =
       error instanceof Error ? error.message : "Não foi possível gerar o cadastro.";
