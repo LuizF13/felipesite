@@ -21,7 +21,7 @@ export function PropertyForm({ property }: { property?: Property | null }) {
 
   return (
     <div className="admin-editor">
-      <form action={action} className="admin-form" encType="multipart/form-data">
+      <form action={action} className="admin-form">
         <div className="admin-form-main">
           <div className="admin-panel">
             <h2>Informações básicas</h2>
