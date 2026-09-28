@@ -6,7 +6,7 @@ export function PropertyCard({ property }: { property: Property }) {
   const image =
     property.cover_image_url ||
     property.property_images?.[0]?.url ||
-    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80";
+    "/images/property-placeholder.svg";
 
   return (
     <article className="property-card">
