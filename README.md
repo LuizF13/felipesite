@@ -172,3 +172,48 @@ Esses dados são apresentados com fonte e aviso de que desempenho histórico e c
 ## Observação sobre imagens de demonstração
 
 Enquanto o banco não está conectado, os cards de demonstração usam imagens remotas do Unsplash. Assim que os imóveis reais forem cadastrados, as imagens passam a vir do Supabase Storage.
+
+
+## Gemini / IA
+
+O projeto possui duas integrações com Gemini usando o SDK oficial `@google/genai`:
+
+1. **Preenchimento automático de imóveis** em `/admin/imoveis/novo` e na edição.
+   - aceita descrição curta;
+   - analisa até 3 fotos;
+   - preenche os campos do cadastro;
+   - possui modo de demonstração para completar dados fictícios/plausíveis;
+   - os dados gerados devem ser revisados antes da publicação.
+
+2. **Chatbot Hope Business** nas páginas públicas.
+   - responde somente sobre a empresa, atendimento, regiões e imóveis publicados;
+   - não usa busca aberta na internet;
+   - não inventa dados de imóveis;
+   - quando uma dúvida empresarial exige atendimento humano, oferece handoff para o WhatsApp;
+   - Enter envia a mensagem e Shift+Enter cria nova linha.
+
+Adicione ao `.env.local`:
+
+```env
+GEMINI_API_KEY=sua_chave_do_google_ai_studio
+GEMINI_MODEL=gemini-3.8-flash
+```
+
+A chave é somente de servidor. **Nunca** use `NEXT_PUBLIC_GEMINI_API_KEY`.
+
+Depois de alterar as dependências ou variáveis:
+
+```bash
+npm install
+npm run dev
+```
+
+### Erro `Failed to fetch` no Chrome
+
+Se o stack trace começar com:
+
+```
+chrome-extension://agjnjboanicjcpenljmaaigopkgdnihi/
+```
+
+a requisição está sendo interceptada pela extensão **PreMiD** do Chrome, não pelo código do Next. Desative a extensão para `localhost` ou teste em uma janela anônima sem extensões.
