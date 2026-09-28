@@ -23,7 +23,7 @@ export function buildBusinessContext(properties: Property[]) {
   return {
     company: siteConfig.companyName,
     positioning:
-      "Imobiliária e consultoria imobiliária no Brasil voltada especialmente a brasileiros que vivem na Europa e querem analisar oportunidades no litoral de Santa Catarina.",
+      "Imobiliária e consultoria imobiliária no Brasil voltada a brasileiros e investidores que vivem fora do país e querem analisar oportunidades no litoral de Santa Catarina.",
     regions: ["Itapema - SC", "Porto Belo - SC"],
     services: [
       "curadoria de oportunidades imobiliárias",
