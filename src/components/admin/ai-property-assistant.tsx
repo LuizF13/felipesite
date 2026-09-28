@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { postFormData } from "@/lib/xhr-client";
 
 type GeneratedProperty = {
   name: string;
@@ -117,18 +118,10 @@ export function AiPropertyAssistant() {
       const aiFiles = await Promise.all(files.slice(0, 3).map(compressImage));
       aiFiles.forEach((file) => payload.append("images", file, file.name));
 
-      const response = await fetch("/api/ai/property", {
-        method: "POST",
-        body: payload,
-      });
-
-      const data = (await response.json()) as GeneratedProperty & {
-        error?: string;
-      };
-
-      if (!response.ok) {
-        throw new Error(data.error || "Não foi possível preencher o imóvel.");
-      }
+      const data = await postFormData<GeneratedProperty>(
+        "/api/ai/property",
+        payload
+      );
 
       assignField(form, "name", data.name);
       assignField(form, "slug", data.slug);
