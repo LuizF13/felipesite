@@ -1,16 +1,53 @@
-import { createLead } from "@/app/actions";
+"use client";
+
+import { useState } from "react";
+import { postJson } from "@/lib/xhr-client";
 
 export function LeadForm({
   propertyId,
+  propertyName,
   compact = false,
 }: {
   propertyId?: string;
+  propertyName?: string;
   compact?: boolean;
 }) {
-  return (
-    <form action={createLead} className={compact ? "lead-form compact" : "lead-form"}>
-      {propertyId ? <input type="hidden" name="property_id" value={propertyId} /> : null}
+  const [loading, setLoading] = useState(false);
+  const [doneUrl, setDoneUrl] = useState("");
+  const [error, setError] = useState("");
 
+  async function submit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (loading) return;
+
+    const form = new FormData(event.currentTarget);
+    setLoading(true);
+    setError("");
+
+    try {
+      const data = await postJson<{ whatsappUrl: string }>("/api/leads/contact", {
+        propertyId,
+        propertyName,
+        name: form.get("name"),
+        whatsapp: form.get("whatsapp"),
+        email: form.get("email"),
+        country: form.get("country"),
+        budgetRange: form.get("budget_range"),
+        goal: form.get("goal"),
+        message: form.get("message"),
+      });
+
+      setDoneUrl(data.whatsappUrl);
+      window.open(data.whatsappUrl, "_blank", "noopener,noreferrer");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Não foi possível enviar.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <form onSubmit={submit} className={compact ? "lead-form compact" : "lead-form"}>
       <div className="form-grid">
         <label>
           <span>Nome</span>
@@ -19,7 +56,7 @@ export function LeadForm({
 
         <label>
           <span>WhatsApp</span>
-          <input name="whatsapp" required placeholder="+351 / +44 / +39..." />
+          <input name="whatsapp" required placeholder="+351 / +1 / +55..." />
         </label>
 
         {!compact ? (
@@ -31,7 +68,7 @@ export function LeadForm({
 
             <label>
               <span>País onde mora</span>
-              <input name="country" placeholder="Portugal, Itália..." />
+              <input name="country" placeholder="Portugal, EUA, Itália..." />
             </label>
 
             <label>
@@ -61,15 +98,25 @@ export function LeadForm({
               <textarea name="message" rows={4} placeholder="Conte brevemente..." />
             </label>
           </>
-        ) : null}
+        ) : (
+          <input type="hidden" name="message" value={propertyName ? `Tenho interesse em ${propertyName}` : ""} />
+        )}
       </div>
 
-      <button className="button button-dark form-submit" type="submit">
-        Quero falar com a equipe →
+      <button className="button button-dark form-submit" type="submit" disabled={loading}>
+        {loading ? "Preparando atendimento..." : "Enviar e abrir WhatsApp →"}
       </button>
 
+      {doneUrl ? (
+        <a className="form-whatsapp-link" href={doneUrl} target="_blank" rel="noreferrer">
+          Abrir WhatsApp novamente
+        </a>
+      ) : null}
+
+      {error ? <p className="form-error">{error}</p> : null}
+
       <p className="form-note">
-        Ao enviar, você autoriza o contato da equipe sobre esta solicitação.
+        Seu contato fica registrado para a equipe e o WhatsApp abre com a mensagem pronta.
       </p>
     </form>
   );
