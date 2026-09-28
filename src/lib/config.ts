@@ -12,3 +12,11 @@ export const isGeminiConfigured = Boolean(process.env.GEMINI_API_KEY);
 
 export const geminiModel =
   process.env.GEMINI_MODEL || "gemini-3.8-flash";
+
+export const geminiFallbackModels = (
+  process.env.GEMINI_FALLBACK_MODELS ||
+  "gemini-3.5-flash-lite,gemini-3.5-flash"
+)
+  .split(",")
+  .map((model) => model.trim())
+  .filter(Boolean);
