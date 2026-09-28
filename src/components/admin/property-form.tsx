@@ -5,6 +5,7 @@ import {
   setCoverImage,
   updateProperty,
 } from "@/app/admin/actions";
+import { AiPropertyAssistant } from "@/components/admin/ai-property-assistant";
 import { formatPrice, statusLabel } from "@/lib/format";
 import type { Property } from "@/lib/types";
 
@@ -23,6 +24,8 @@ export function PropertyForm({ property }: { property?: Property | null }) {
     <div className="admin-editor">
       <form action={action} className="admin-form">
         <div className="admin-form-main">
+          <AiPropertyAssistant />
+
           <div className="admin-panel">
             <h2>Informações básicas</h2>
 
@@ -204,13 +207,13 @@ export function PropertyForm({ property }: { property?: Property | null }) {
             <h2>Fotos e vídeo</h2>
 
             <div className="admin-form-grid">
-              <label className="full">
-                <span>Enviar novas fotos</span>
-                <input name="images" type="file" accept="image/*" multiple />
-                <small>
-                  Você pode selecionar várias imagens. Elas serão armazenadas no Supabase Storage.
-                </small>
-              </label>
+              <div className="full admin-upload-note">
+                <strong>Fotos novas</strong>
+                <p>
+                  Selecione as imagens no painel “Preencher imóvel com IA” acima.
+                  Elas serão analisadas pelo Gemini e também enviadas para o Storage ao salvar.
+                </p>
+              </div>
 
               <label className="full">
                 <span>URL de capa manual</span>
