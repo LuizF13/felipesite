@@ -245,17 +245,23 @@ export function PropertyForm({ property }: { property?: Property | null }) {
                     <article key={image.id || image.url}>
                       <img src={image.url} alt={image.alt_text || property.name} />
                       <div className="admin-gallery-actions">
-                        <form action={coverAction}>
-                          <button className="small-button" type="submit">
-                            Usar como capa
-                          </button>
-                        </form>
+                        <button
+                          className="small-button"
+                          type="submit"
+                          formAction={coverAction}
+                          formNoValidate
+                        >
+                          Usar como capa
+                        </button>
                         {image.id ? (
-                          <form action={removeAction}>
-                            <button className="small-button danger" type="submit">
-                              Excluir
-                            </button>
-                          </form>
+                          <button
+                            className="small-button danger"
+                            type="submit"
+                            formAction={removeAction}
+                            formNoValidate
+                          >
+                            Excluir
+                          </button>
                         ) : null}
                       </div>
                     </article>
