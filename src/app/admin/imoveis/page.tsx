@@ -39,7 +39,7 @@ export default async function AdminPropertiesPage() {
                       src={
                         property.cover_image_url ||
                         property.property_images?.[0]?.url ||
-                        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=500&q=70"
+                        "/images/property-placeholder.svg"
                       }
                       alt=""
                     />
