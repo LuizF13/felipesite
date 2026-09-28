@@ -211,7 +211,7 @@ video {
   overflow: hidden;
   background:
     linear-gradient(110deg, rgba(7, 24, 19, 0.8), rgba(7, 24, 19, 0.25)),
-    url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2200&q=85")
+    url("/images/hero-placeholder.svg")
       center / cover;
   color: var(--white);
 }
@@ -1455,7 +1455,7 @@ textarea:focus {
   background:
     linear-gradient(90deg, rgba(8, 24, 19, 0.86), rgba(8, 24, 19, 0.4) 58%, rgba(8, 24, 19, 0.18)),
     linear-gradient(0deg, rgba(8, 24, 19, 0.72), transparent 58%),
-    url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2200&q=88")
+    url("/images/hero-placeholder.svg")
       center / cover;
 }
 
